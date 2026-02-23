@@ -1,789 +1,904 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>Гвинт Счетчик</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family:
+          -apple-system, "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif;
+      }
 
-        body {
-            background: #f0ebe5;
-            min-height: 100vh;
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      body {
+        background: #f0ebe5;
+        min-height: 100vh;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-        .container {
-            max-width: 500px;
-            width: 100%;
-            min-height: 850px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            background: #f0ebe5;
-        }
+      .container {
+        max-width: 500px;
+        width: 100%;
+        min-height: 850px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        background: #f0ebe5;
+      }
 
-        /* Верхняя панель */
-        .header {
-            background: #ffffff;
-            border-radius: 28px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border: 1px solid #e5ddd5;
-        }
+      /* Верхняя панель */
+      .header {
+        background: #ffffff;
+        border-radius: 28px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e5ddd5;
+      }
 
-        .score-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
+      .score-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
 
-        .wins-box {
-            display: flex;
-            gap: 15px;
-            background: #f8f4f0;
-            padding: 10px 20px;
-            border-radius: 50px;
-            border: 2px solid #d5cec5;
-        }
+      .wins-box {
+        display: flex;
+        gap: 15px;
+        background: #f8f4f0;
+        padding: 10px 20px;
+        border-radius: 50px;
+        border: 2px solid #d5cec5;
+      }
 
-        .wins-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+      .wins-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
 
-        .wins-value {
-            font-weight: 700;
-            min-width: 30px;
-            text-align: center;
-            font-size: 22px;
-        }
+      .wins-value {
+        font-weight: 700;
+        min-width: 30px;
+        text-align: center;
+        font-size: 22px;
+      }
 
-        .wins-value.player1 { color: #2e7d32; }
-        .wins-value.player2 { color: #c62828; }
+      .wins-value.player1 {
+        color: #2e7d32;
+      }
+      .wins-value.player2 {
+        color: #c62828;
+      }
 
-        .total-score {
-            font-size: 48px;
-            font-weight: 700;
-            color: #2c3e50;
-            text-align: center;
-            line-height: 1;
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.05);
-            max-width: 150px;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 0 5px;
-        }
+      .total-score {
+        font-size: 48px;
+        font-weight: 700;
+        color: #2c3e50;
+        text-align: center;
+        line-height: 1;
+        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.05);
+        max-width: 150px;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 0 5px;
+      }
 
-        /* Выпадающий список погоды */
-        .weather-selector {
-            margin: 10px 0 0 0;
-        }
+      /* Выпадающий список погоды */
+      .weather-selector {
+        margin: 10px 0 0 0;
+      }
 
-        .weather-select {
-            width: 100%;
-            background: #f8f4f0;
-            border: 2px solid #d5cec5;
-            border-radius: 50px;
-            padding: 14px 20px;
-            font-size: 16px;
-            color: #2c3e50;
-            -webkit-appearance: none;
-            appearance: none;
-            font-weight: 500;
-            cursor: pointer;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='%232c3e50'><path d='M7 10l5 5 5-5z'/></svg>");
-            background-repeat: no-repeat;
-            background-position: right 20px center;
-            background-size: 20px;
-        }
+      .weather-select {
+        width: 100%;
+        background: #f8f4f0;
+        border: 2px solid #d5cec5;
+        border-radius: 50px;
+        padding: 14px 20px;
+        font-size: 16px;
+        color: #2c3e50;
+        -webkit-appearance: none;
+        appearance: none;
+        font-weight: 500;
+        cursor: pointer;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='%232c3e50'><path d='M7 10l5 5 5-5z'/></svg>");
+        background-repeat: no-repeat;
+        background-position: right 20px center;
+        background-size: 20px;
+      }
 
-        /* Панель добавления */
-        .add-panel {
-            background: #ffffff;
-            border-radius: 24px;
-            padding: 18px;
-            border: 1px solid #e5ddd5;
-        }
+      /* Панель добавления */
+      .add-panel {
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 18px;
+        border: 1px solid #e5ddd5;
+      }
 
-        .add-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-bottom: 14px;
-        }
+      .add-row {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 14px;
+      }
 
-        .power-select, .row-select {
-            background: #f8f4f0;
-            border: 2px solid #d5cec5;
-            border-radius: 40px;
-            padding: 14px 16px;
-            font-size: 16px;
-            color: #2c3e50;
-            -webkit-appearance: none;
-            font-weight: 500;
-        }
+      .power-select,
+      .row-select {
+        background: #f8f4f0;
+        border: 2px solid #d5cec5;
+        border-radius: 40px;
+        padding: 14px 16px;
+        font-size: 16px;
+        color: #2c3e50;
+        -webkit-appearance: none;
+        font-weight: 500;
+      }
 
-        .power-select {
-            width: 80px;
-            text-align: center;
-        }
+      .power-select {
+        width: 80px;
+        text-align: center;
+      }
 
-        .row-select {
-            flex: 1;
-        }
+      .row-select {
+        flex: 1;
+      }
 
-        /* Способности в одну строку */
-        .ability-buttons {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 14px;
-            justify-content: space-between;
-        }
+      /* Способности в одну строку */
+      .ability-buttons {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 14px;
+        justify-content: space-between;
+      }
 
-        .ability-btn {
-            background: #f8f4f0;
-            border: 2px solid #d5cec5;
-            border-radius: 40px;
-            padding: 10px 4px;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            cursor: pointer;
-            color: #2c3e50;
-            flex: 1;
-            justify-content: center;
-            font-weight: 600;
-            transition: all 0.1s;
-            white-space: nowrap;
-        }
+      .ability-btn {
+        background: #f8f4f0;
+        border: 2px solid #d5cec5;
+        border-radius: 40px;
+        padding: 10px 4px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        cursor: pointer;
+        color: #2c3e50;
+        flex: 1;
+        justify-content: center;
+        font-weight: 600;
+        transition: all 0.1s;
+        white-space: nowrap;
+      }
 
-        .ability-btn.active {
-            background: #e3f2fd;
-            border-color: #2196f3;
-            color: #0d47a1;
-            transform: scale(1.02);
-        }
+      .ability-btn.active {
+        background: #e3f2fd;
+        border-color: #2196f3;
+        color: #0d47a1;
+        transform: scale(1.02);
+      }
 
-        .ability-btn.hero.active {
-            background: #fff3e0;
-            border-color: #ff9800;
-            color: #e65100;
-        }
-        .ability-btn.morale.active {
-            background: #e8f5e9;
-            border-color: #4caf50;
-            color: #1b5e20;
-        }
-        .ability-btn.horn.active {
-            background: #fff8e1;
-            border-color: #ffc107;
-            color: #ff6f00;
-        }
-        .ability-btn.friend.active {
-            background: #f3e5f5;
-            border-color: #9c27b0;
-            color: #4a148c;
-        }
+      .ability-btn.hero.active {
+        background: #fff3e0;
+        border-color: #ff9800;
+        color: #e65100;
+      }
+      .ability-btn.morale.active {
+        background: #e8f5e9;
+        border-color: #4caf50;
+        color: #1b5e20;
+      }
+      .ability-btn.horn.active {
+        background: #fff8e1;
+        border-color: #ffc107;
+        color: #ff6f00;
+      }
+      .ability-btn.friend.active {
+        background: #f3e5f5;
+        border-color: #9c27b0;
+        color: #4a148c;
+      }
 
-        .add-btn {
-            background: #2c3e50;
-            border: none;
-            border-radius: 50px;
-            padding: 16px;
-            color: white;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.1s;
-        }
+      .add-btn {
+        background: #2c3e50;
+        border: none;
+        border-radius: 50px;
+        padding: 16px;
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.1s;
+      }
 
-        .add-btn:active {
-            background: #1a2632;
-        }
+      .add-btn:active {
+        background: #1a2632;
+      }
 
-        /* Ряды */
-        .rows-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            flex: 1;
-        }
+      /* Ряды */
+      .rows-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex: 1;
+      }
 
-        .row-card {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 12px;
-            border: 1px solid #e5ddd5;
-        }
+      .row-card {
+        background: #ffffff;
+        border-radius: 20px;
+        padding: 12px;
+        border: 1px solid #e5ddd5;
+      }
 
-        .row-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f8f4f0;
-            padding: 14px 16px;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+      .row-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f8f4f0;
+        padding: 14px 16px;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
 
-        /* Цвета для заголовка ряда */
-        .row-header.buffed {
-            background: #e8f5e9;
-            border-left: 4px solid #2e7d32;
-        }
+      /* Цвета для заголовка ряда */
+      .row-header.buffed {
+        background: #e8f5e9;
+        border-left: 4px solid #2e7d32;
+      }
 
-        .row-header.debuffed {
-            background: #ffebee;
-            border-left: 4px solid #c62828;
-        }
+      .row-header.debuffed {
+        background: #ffebee;
+        border-left: 4px solid #c62828;
+      }
 
-        .row-title {
-            font-size: 18px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #2c3e50;
-        }
+      .row-title {
+        font-size: 18px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #2c3e50;
+      }
 
-        .horn-icon {
-            font-size: 20px;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 20px;
-        }
+      .horn-icon {
+        font-size: 20px;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 20px;
+      }
 
-        .horn-icon.active {
-            background: #ffd700;
-        }
+      .horn-icon.active {
+        background: #ffd700;
+      }
 
-        .row-arrow {
-            font-size: 14px;
-            color: #95a5a6;
-        }
+      .row-arrow {
+        font-size: 14px;
+        color: #95a5a6;
+      }
 
-        .row-total {
-            font-size: 24px;
-            font-weight: 700;
-            transition: color 0.2s;
-        }
+      .row-total {
+        font-size: 24px;
+        font-weight: 700;
+        transition: color 0.2s;
+      }
 
-        /* Цвета для суммы ряда */
-        .row-total.buffed { color: #2e7d32; }
-        .row-total.debuffed { color: #c62828; }
-        .row-total.normal { color: #2c3e50; }
+      /* Цвета для суммы ряда */
+      .row-total.buffed {
+        color: #2e7d32;
+      }
+      .row-total.debuffed {
+        color: #c62828;
+      }
+      .row-total.normal {
+        color: #2c3e50;
+      }
 
-        /* Карточки */
-        .cards-container {
-            display: none;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 10px;
-        }
+      /* Карточки */
+      .cards-container {
+        display: none;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 10px;
+      }
 
-        .row-card.expanded .cards-container {
-            display: flex;
-        }
+      .row-card.expanded .cards-container {
+        display: flex;
+      }
 
-        .card-item {
-            background: #f8f4f0;
-            border-radius: 14px;
-            padding: 10px 14px;
-            border: 1px solid #d5cec5;
-            cursor: pointer;
-        }
+      .card-item {
+        background: #f8f4f0;
+        border-radius: 14px;
+        padding: 10px 14px;
+        border: 1px solid #d5cec5;
+        cursor: pointer;
+      }
 
-        .card-item.hero {
-            background: #fff8e7;
-            border-color: #e0cba0;
-        }
+      .card-item.hero {
+        background: #fff8e7;
+        border-color: #e0cba0;
+      }
 
-        .card-main {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      .card-main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        .card-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+      .card-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
 
-        .card-power {
-            font-size: 20px;
-            font-weight: 700;
-            min-width: 40px;
-            text-align: center;
-        }
+      .card-power {
+        font-size: 20px;
+        font-weight: 700;
+        min-width: 40px;
+        text-align: center;
+      }
 
-        .power-normal { color: #2c3e50; }
-        .power-buffed { color: #2e7d32; }
-        .power-debuffed { color: #c62828; }
-        .power-hero { color: #bf6f00; }
+      .power-normal {
+        color: #2c3e50;
+      }
+      .power-buffed {
+        color: #2e7d32;
+      }
+      .power-debuffed {
+        color: #c62828;
+      }
+      .power-hero {
+        color: #bf6f00;
+      }
 
-        .card-name {
-            font-size: 16px;
-            font-weight: 500;
-            color: #2c3e50;
-        }
+      .card-name {
+        font-size: 16px;
+        font-weight: 500;
+        color: #2c3e50;
+      }
 
-        .card-badges {
-            display: flex;
-            gap: 6px;
-        }
+      .card-badges {
+        display: flex;
+        gap: 6px;
+      }
 
-        .mini-badge {
-            width: 26px;
-            height: 26px;
-            border-radius: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            background: white;
-            border: 1px solid #d5cec5;
-        }
+      .mini-badge {
+        width: 26px;
+        height: 26px;
+        border-radius: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        background: white;
+        border: 1px solid #d5cec5;
+      }
 
-        .card-details {
-            display: none;
-            margin-top: 10px;
-            padding: 10px;
-            background: white;
-            border-radius: 10px;
-            font-size: 14px;
-            color: #5a6b7a;
-            border: 1px solid #e5ddd5;
-        }
+      .card-details {
+        display: none;
+        margin-top: 10px;
+        padding: 10px;
+        background: white;
+        border-radius: 10px;
+        font-size: 14px;
+        color: #5a6b7a;
+        border: 1px solid #e5ddd5;
+      }
 
-        .card-item.expanded .card-details {
-            display: block;
-        }
+      .card-item.expanded .card-details {
+        display: block;
+      }
 
-        .calc-line {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+      .calc-line {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
 
-        .calc-line.final {
-            color: #2c3e50;
-            font-weight: 700;
-            margin-top: 6px;
-            border-top: 1px solid #e5ddd5;
-            padding-top: 6px;
-        }
+      .calc-line.final {
+        color: #2c3e50;
+        font-weight: 700;
+        margin-top: 6px;
+        border-top: 1px solid #e5ddd5;
+        padding-top: 6px;
+      }
 
-        .remove-btn {
-            background: white;
-            color: #95a5a6;
-            width: 36px;
-            height: 36px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            cursor: pointer;
-            border: 1px solid #d5cec5;
-        }
+      .remove-btn {
+        background: white;
+        color: #95a5a6;
+        width: 36px;
+        height: 36px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        cursor: pointer;
+        border: 1px solid #d5cec5;
+      }
 
-        .remove-btn:active {
-            background: #fee;
-            color: #e74c3c;
-        }
+      .remove-btn:active {
+        background: #fee;
+        color: #e74c3c;
+      }
 
-        /* Кнопки управления - НОВОЕ РАСПОЛОЖЕНИЕ */
-        .reset-button-container {
-            width: 100%;
-            margin-bottom: 10px;
-        }
+      /* Кнопки управления - НОВОЕ РАСПОЛОЖЕНИЕ */
+      .reset-button-container {
+        width: 100%;
+        margin-bottom: 10px;
+      }
 
-        .reset-btn {
-            width: 100%;
-            padding: 18px;
-            border-radius: 50px;
-            border: 2px solid #95a5a6;
-            font-size: 20px;
-            font-weight: 700;
-            color: #2c3e50;
-            background: #f5f5f5;
-            cursor: pointer;
-            transition: all 0.1s;
-            box-shadow: 0 4px 0 #7f8c8d;
-        }
+      .reset-btn {
+        width: 100%;
+        padding: 18px;
+        border-radius: 50px;
+        border: 2px solid #95a5a6;
+        font-size: 20px;
+        font-weight: 700;
+        color: #2c3e50;
+        background: #f5f5f5;
+        cursor: pointer;
+        transition: all 0.1s;
+        box-shadow: 0 4px 0 #7f8c8d;
+      }
 
-        .reset-btn:active {
-            transform: translateY(4px);
-            box-shadow: none;
-        }
+      .reset-btn:active {
+        transform: translateY(4px);
+        box-shadow: none;
+      }
 
-        .win-lose-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            width: 100%;
-        }
+      .win-lose-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        width: 100%;
+      }
 
-        .action-btn {
-            padding: 18px;
-            border-radius: 50px;
-            border: 2px solid;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.1s;
-            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
-        }
+      .action-btn {
+        padding: 18px;
+        border-radius: 50px;
+        border: 2px solid;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.1s;
+        box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+      }
 
-        .action-btn:active {
-            transform: translateY(4px);
-            box-shadow: none;
-        }
+      .action-btn:active {
+        transform: translateY(4px);
+        box-shadow: none;
+      }
 
-        .action-btn.win {
-            background: #e8f5e9;
-            border-color: #2e7d32;
-            color: #2e7d32;
-            box-shadow: 0 4px 0 #1b5e20;
-        }
-        .action-btn.lose {
-            background: #ffebee;
-            border-color: #c62828;
-            color: #c62828;
-            box-shadow: 0 4px 0 #8b0000;
-        }
+      .action-btn.win {
+        background: #e8f5e9;
+        border-color: #2e7d32;
+        color: #2e7d32;
+        box-shadow: 0 4px 0 #1b5e20;
+      }
+      .action-btn.lose {
+        background: #ffebee;
+        border-color: #c62828;
+        color: #c62828;
+        box-shadow: 0 4px 0 #8b0000;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <!-- Верхняя панель -->
-        <div class="header">
-            <div class="score-row">
-                <div class="wins-box">
-                    <div class="wins-item"><span class="wins-value player1" id="player1Wins">0</span></div>
-                    <div class="wins-item"><span class="wins-value player2" id="player2Wins">0</span></div>
-                </div>
-                <div class="total-score" id="totalScore">0</div>
+      <!-- Верхняя панель -->
+      <div class="header">
+        <div class="score-row">
+          <div class="wins-box">
+            <div class="wins-item">
+              <span class="wins-value player1" id="player1Wins">0</span>
             </div>
-
-            <!-- Выпадающий список погоды -->
-            <div class="weather-selector">
-                <select class="weather-select" id="weatherSelect" onchange="setWeather(this.value)">
-                    <option value="clear" selected>☀️ Ясно</option>
-                    <option value="frost">❄️ Мороз (ближний ряд)</option>
-                    <option value="fog">🌫️ Туман (дальний ряд)</option>
-                    <option value="rain">🌧️ Ливень (осадный ряд)</option>
-                    <option value="storm">⛈️ Шторм (дальний + осадный)</option>
-                </select>
+            <div class="wins-item">
+              <span class="wins-value player2" id="player2Wins">0</span>
             </div>
+          </div>
+          <div class="total-score" id="totalScore">0</div>
         </div>
 
-        <!-- Панель добавления -->
-        <div class="add-panel">
-            <div class="add-row">
-                <select class="power-select" id="cardPower">
-                    <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option>
-                    <option value="4">4</option><option value="5" selected>5</option><option value="6">6</option>
-                    <option value="7">7</option><option value="8">8</option><option value="9">9</option>
-                    <option value="10">10</option><option value="11">11</option><option value="12">12</option>
-                    <option value="13">13</option><option value="14">14</option><option value="15">15</option>
-                </select>
+        <!-- Выпадающий список погоды -->
+        <div class="weather-selector">
+          <select
+            class="weather-select"
+            id="weatherSelect"
+            onchange="setWeather(this.value)"
+          >
+            <option value="clear" selected>☀️ Ясно</option>
+            <option value="frost">❄️ Мороз (ближний ряд)</option>
+            <option value="fog">🌫️ Туман (дальний ряд)</option>
+            <option value="rain">🌧️ Ливень (осадный ряд)</option>
+            <option value="storm">⛈️ Шторм (дальний + осадный)</option>
+          </select>
+        </div>
+      </div>
 
-                <select class="row-select" id="cardRow">
-                    <option value="melee">⚔️ Ближний</option>
-                    <option value="ranged">🏹 Дальний</option>
-                    <option value="siege">🏰 Осадный</option>
-                </select>
-            </div>
+      <!-- Панель добавления -->
+      <div class="add-panel">
+        <div class="add-row">
+          <select class="power-select" id="cardPower">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5" selected>5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+            <option value="13">13</option>
+            <option value="14">14</option>
+            <option value="15">15</option>
+          </select>
 
-            <!-- Способности в одну строку -->
-            <div class="ability-buttons">
-                <button class="ability-btn hero" id="btnHero" onclick="toggleAbility('hero')">👑 Герой</button>
-                <button class="ability-btn morale" id="btnMorale" onclick="toggleAbility('morale')">⭐ Прилив</button>
-                <button class="ability-btn horn" id="btnHorn" onclick="toggleAbility('horn')">📯 Бард</button>
-                <button class="ability-btn friend" id="btnFriend" onclick="toggleAbility('friend')">🤝 Строй</button>
-            </div>
-
-            <button class="add-btn" onclick="addCard()">➕ Добавить карту</button>
+          <select class="row-select" id="cardRow">
+            <option value="melee">⚔️ Ближний</option>
+            <option value="ranged">🏹 Дальний</option>
+            <option value="siege">🏰 Осадный</option>
+          </select>
         </div>
 
-        <!-- Ряды -->
-        <div class="rows-container" id="rowsContainer"></div>
+        <!-- Способности в одну строку -->
+        <div class="ability-buttons">
+          <button
+            class="ability-btn hero"
+            id="btnHero"
+            onclick="toggleAbility('hero')"
+          >
+            👑 Герой
+          </button>
+          <button
+            class="ability-btn morale"
+            id="btnMorale"
+            onclick="toggleAbility('morale')"
+          >
+            ⭐ Прилив
+          </button>
+          <button
+            class="ability-btn horn"
+            id="btnHorn"
+            onclick="toggleAbility('horn')"
+          >
+            📯 Бард
+          </button>
+          <button
+            class="ability-btn friend"
+            id="btnFriend"
+            onclick="toggleAbility('friend')"
+          >
+            🤝 Строй
+          </button>
+        </div>
 
-        <!-- Кнопки управления - НОВОЕ РАСПОЛОЖЕНИЕ -->
-        <div class="reset-button-container">
-            <button class="reset-btn" onclick="resetRound()">🔄 Сбросить раунд</button>
-        </div>
-        <div class="win-lose-container">
-            <button class="action-btn win" onclick="addWin()">⚔️ Победа</button>
-            <button class="action-btn lose" onclick="addLoss()">🏹 Поражение</button>
-        </div>
+        <button class="add-btn" onclick="addCard()">➕ Добавить карту</button>
+      </div>
+
+      <!-- Ряды -->
+      <div class="rows-container" id="rowsContainer"></div>
+
+      <!-- Кнопки управления - НОВОЕ РАСПОЛОЖЕНИЕ -->
+      <div class="reset-button-container">
+        <button class="reset-btn" onclick="resetRound()">
+          🔄 Сбросить раунд
+        </button>
+      </div>
+      <div class="win-lose-container">
+        <button class="action-btn win" onclick="addWin()">⚔️ Победа</button>
+        <button class="action-btn lose" onclick="addLoss()">
+          🏹 Поражение
+        </button>
+      </div>
     </div>
 
     <script>
-        class GwentCounter {
-            constructor() {
-                this.player1Wins = 0;
-                this.player2Wins = 0;
-                this.currentWeather = 'clear';
-                this.cards = { melee: [], ranged: [], siege: [] };
-                this.horn = { melee: false, ranged: false, siege: false };
-                this.expandedRows = { melee: false, ranged: false, siege: false };
+      class GwentCounter {
+        constructor() {
+          this.player1Wins = 0;
+          this.player2Wins = 0;
+          this.currentWeather = "clear";
+          this.cards = { melee: [], ranged: [], siege: [] };
+          this.horn = { melee: false, ranged: false, siege: false };
+          this.expandedRows = { melee: false, ranged: false, siege: false };
 
-                this.selectedAbilities = {
-                    hero: false,
-                    morale: false,
-                    horn: false,
-                    friend: false
-                };
+          this.selectedAbilities = {
+            hero: false,
+            morale: false,
+            horn: false,
+            friend: false,
+          };
+        }
+
+        toggleAbility(type) {
+          this.selectedAbilities[type] = !this.selectedAbilities[type];
+
+          if (type === "hero" && this.selectedAbilities.hero) {
+            this.selectedAbilities.morale = false;
+            this.selectedAbilities.horn = false;
+            this.selectedAbilities.friend = false;
+          }
+
+          this.updateAbilityButtons();
+        }
+
+        updateAbilityButtons() {
+          document
+            .getElementById("btnHero")
+            .classList.toggle("active", this.selectedAbilities.hero);
+          document
+            .getElementById("btnMorale")
+            .classList.toggle("active", this.selectedAbilities.morale);
+          document
+            .getElementById("btnHorn")
+            .classList.toggle("active", this.selectedAbilities.horn);
+          document
+            .getElementById("btnFriend")
+            .classList.toggle("active", this.selectedAbilities.friend);
+        }
+
+        setWeather(type) {
+          this.currentWeather = type;
+          this.updateDisplay();
+        }
+
+        isRowAffectedByWeather(row) {
+          if (this.currentWeather === "clear") return false;
+          if (this.currentWeather === "frost" && row === "melee") return true;
+          if (this.currentWeather === "fog" && row === "ranged") return true;
+          if (this.currentWeather === "rain" && row === "siege") return true;
+          if (
+            this.currentWeather === "storm" &&
+            (row === "ranged" || row === "siege")
+          )
+            return true;
+          return false;
+        }
+
+        generateName() {
+          if (this.selectedAbilities.hero) return "Герой";
+          if (this.selectedAbilities.morale) return "Прилив";
+          if (this.selectedAbilities.horn) return "Бард";
+          if (this.selectedAbilities.friend) return "Строй";
+          return "Воин";
+        }
+
+        toggleRow(row) {
+          this.expandedRows[row] = !this.expandedRows[row];
+          this.updateDisplay();
+        }
+
+        toggleHorn(row) {
+          this.horn[row] = !this.horn[row];
+          this.updateDisplay();
+        }
+
+        addCard() {
+          const power = parseInt(document.getElementById("cardPower").value);
+          const row = document.getElementById("cardRow").value;
+
+          const card = {
+            id: Date.now(),
+            power: power,
+            basePower: power,
+            isHero: this.selectedAbilities.hero,
+            hasMorale: this.selectedAbilities.morale,
+            hasHorn: this.selectedAbilities.horn,
+            isFriend: this.selectedAbilities.friend,
+            name: this.generateName(),
+          };
+
+          this.cards[row].push(card);
+
+          this.selectedAbilities = {
+            hero: false,
+            morale: false,
+            horn: false,
+            friend: false,
+          };
+          this.updateAbilityButtons();
+
+          this.updateDisplay();
+        }
+
+        removeCard(row, id) {
+          const index = this.cards[row].findIndex((c) => c.id === id);
+          if (index !== -1) {
+            this.cards[row].splice(index, 1);
+            this.updateDisplay();
+          }
+        }
+
+        toggleCardDetails(id) {
+          const element = document.getElementById(`card-${id}`);
+          if (element) {
+            element.classList.toggle("expanded");
+          }
+        }
+
+        calculateCardPower(card, rowCards, rowHasHorn, rowHasWeather) {
+          if (card.isHero) {
+            return {
+              final: card.power,
+              steps: ["👑 Герой: " + card.power],
+              change: 0,
+            };
+          }
+
+          let currentPower = card.power;
+          let steps = [`Своя: ${card.power}`]; // ← добавляем начальную силу
+          let change = 0;
+
+          // 1. Погода - сбрасывает до 1, но если карта уже 0, оставляем 0
+          if (rowHasWeather) {
+            if (currentPower === 0) {
+              steps.push("🌧️ Погода: 0 (карта без силы)");
+              // оставляем 0
+            } else {
+              currentPower = 1;
+              steps.push("🌧️ Погода: 1");
+              change = -(card.power - 1);
+            }
+          }
+
+          // 2. Мораль (+1 за каждую карту с моралью)
+          const moraleCount = rowCards.filter(
+            (c) => c.hasMorale && c.id !== card.id,
+          ).length;
+          if (moraleCount > 0) {
+            currentPower += moraleCount;
+            steps.push(`⭐ Мораль +${moraleCount}: ${currentPower}`);
+            change += moraleCount;
+          }
+
+          // 3. Друзья (умножение на количество)
+          if (card.isFriend) {
+            const friendCount = rowCards.filter(
+              (c) => c.isFriend && !c.isHero,
+            ).length;
+            if (friendCount > 1) {
+              const before = currentPower;
+              currentPower = currentPower * friendCount;
+              steps.push(`🤝 Друзья x${friendCount}: ${currentPower}`);
+              change += currentPower - before;
+            }
+          }
+
+          // 4. Рог (удваивает ВСЁ что получилось после погоды, морали и друзей)
+          if (rowHasHorn) {
+            if (currentPower === 0) {
+              steps.push("📯 Рог: 0 (ноль не удваивается)");
+            } else {
+              const before = currentPower;
+              currentPower = currentPower * 2;
+              steps.push(`📯 Рог ×2: ${currentPower}`);
+              change += currentPower - before;
+            }
+          } else if (card.hasHorn) {
+            steps.push(`📯 Свой рог (ждёт)`);
+          }
+
+          return { final: currentPower, steps: steps, change: change };
+        }
+        calculateRow(row) {
+          const rowCards = this.cards[row];
+          if (rowCards.length === 0)
+            return { total: 0, cards: [], state: "normal" };
+
+          const rowHasHorn = this.horn[row];
+          const rowHasWeather = this.isRowAffectedByWeather(row);
+          const hasCardHorn = rowCards.some((c) => c.hasHorn && !c.isHero);
+          const results = [];
+
+          rowCards.forEach((card) => {
+            const calc = this.calculateCardPower(
+              card,
+              rowCards,
+              rowHasHorn,
+              rowHasWeather,
+            );
+
+            if (hasCardHorn && !rowHasHorn && !card.hasHorn && !card.isHero) {
+              const before = calc.final;
+              calc.final = calc.final * 2;
+              calc.steps.push(`📯 Бард х2: ${calc.final}`);
+              calc.change += calc.final - before;
             }
 
-            toggleAbility(type) {
-                this.selectedAbilities[type] = !this.selectedAbilities[type];
+            results.push({
+              ...card,
+              finalPower: calc.final,
+              steps: calc.steps,
+              change: calc.change,
+            });
+          });
 
-                if (type === 'hero' && this.selectedAbilities.hero) {
-                    this.selectedAbilities.morale = false;
-                    this.selectedAbilities.horn = false;
-                    this.selectedAbilities.friend = false;
-                }
+          const total = results.reduce((sum, card) => sum + card.finalPower, 0);
 
-                this.updateAbilityButtons();
+          // Определяем состояние ряда для цвета
+          let state = "normal";
+          const hasBuffed = results.some((c) => c.finalPower > c.power);
+          const hasDebuffed = results.some((c) => c.finalPower < c.power);
+
+          if (hasDebuffed && !hasBuffed) {
+            state = "debuffed";
+          } else if (hasBuffed) {
+            state = "buffed";
+          }
+
+          return {
+            total: total,
+            cards: results,
+            state: state,
+          };
+        }
+
+        calculateTotal() {
+          return (
+            this.calculateRow("melee").total +
+            this.calculateRow("ranged").total +
+            this.calculateRow("siege").total
+          );
+        }
+
+        getPowerColor(card) {
+          if (card.isHero) return "power-hero";
+          if (card.finalPower > card.power) return "power-buffed";
+          if (card.finalPower < card.power) return "power-debuffed";
+          return "power-normal";
+        }
+
+        updateDisplay() {
+          const rows = ["melee", "ranged", "siege"];
+          const rowNames = {
+            melee: "Ближний",
+            ranged: "Дальний",
+            siege: "Осадный",
+          };
+
+          const container = document.getElementById("rowsContainer");
+          container.innerHTML = "";
+
+          rows.forEach((row) => {
+            const rowData = this.calculateRow(row);
+
+            // Классы для заголовка и суммы
+            let headerClass = "row-header";
+            let totalClass = "row-total";
+
+            if (rowData.state === "buffed") {
+              headerClass += " buffed";
+              totalClass += " buffed";
+            } else if (rowData.state === "debuffed") {
+              headerClass += " debuffed";
+              totalClass += " debuffed";
+            } else {
+              totalClass += " normal";
             }
 
-            updateAbilityButtons() {
-                document.getElementById('btnHero').classList.toggle('active', this.selectedAbilities.hero);
-                document.getElementById('btnMorale').classList.toggle('active', this.selectedAbilities.morale);
-                document.getElementById('btnHorn').classList.toggle('active', this.selectedAbilities.horn);
-                document.getElementById('btnFriend').classList.toggle('active', this.selectedAbilities.friend);
+            if (this.expandedRows[row]) {
+              headerClass += " expanded";
             }
 
-            setWeather(type) {
-                this.currentWeather = type;
-                this.updateDisplay();
-            }
-
-            isRowAffectedByWeather(row) {
-                if (this.currentWeather === 'clear') return false;
-                if (this.currentWeather === 'frost' && row === 'melee') return true;
-                if (this.currentWeather === 'fog' && row === 'ranged') return true;
-                if (this.currentWeather === 'rain' && row === 'siege') return true;
-                if (this.currentWeather === 'storm' && (row === 'ranged' || row === 'siege')) return true;
-                return false;
-            }
-
-            generateName() {
-                if (this.selectedAbilities.hero) return 'Герой';
-                if (this.selectedAbilities.morale) return 'Прилив';
-                if (this.selectedAbilities.horn) return 'Бард';
-                if (this.selectedAbilities.friend) return 'Строй';
-                return 'Воин';
-            }
-
-            toggleRow(row) {
-                this.expandedRows[row] = !this.expandedRows[row];
-                this.updateDisplay();
-            }
-
-            toggleHorn(row) {
-                this.horn[row] = !this.horn[row];
-                this.updateDisplay();
-            }
-
-            addCard() {
-                const power = parseInt(document.getElementById('cardPower').value);
-                const row = document.getElementById('cardRow').value;
-
-                const card = {
-                    id: Date.now(),
-                    power: power,
-                    basePower: power,
-                    isHero: this.selectedAbilities.hero,
-                    hasMorale: this.selectedAbilities.morale,
-                    hasHorn: this.selectedAbilities.horn,
-                    isFriend: this.selectedAbilities.friend,
-                    name: this.generateName()
-                };
-
-                this.cards[row].push(card);
-
-                this.selectedAbilities = { hero: false, morale: false, horn: false, friend: false };
-                this.updateAbilityButtons();
-
-                this.updateDisplay();
-            }
-
-            removeCard(row, id) {
-                const index = this.cards[row].findIndex(c => c.id === id);
-                if (index !== -1) {
-                    this.cards[row].splice(index, 1);
-                    this.updateDisplay();
-                }
-            }
-
-            toggleCardDetails(id) {
-                const element = document.getElementById(`card-${id}`);
-                if (element) {
-                    element.classList.toggle('expanded');
-                }
-            }
-
-            calculateCardPower(card, rowCards, rowHasHorn, rowHasWeather) {
-                if (card.isHero) {
-                    return {
-                        final: card.power,
-                        steps: ['👑 Герой: ' + card.power],
-                        change: 0
-                    };
-                }
-
-                let currentPower = card.power;
-                let steps = [];
-                let change = 0;
-
-                if (rowHasWeather) {
-                    currentPower = 1;
-                    steps.push('🌧️ Погода: 1');
-                    change = - (card.power - 1);
-                }
-
-                const moraleCount = rowCards.filter(c => c.hasMorale && c.id !== card.id).length;
-                if (moraleCount > 0) {
-                    currentPower += moraleCount;
-                    steps.push(`⭐ Прилив +${moraleCount}: ${currentPower}`);
-                    change += moraleCount;
-                }
-
-                if (card.isFriend) {
-                    const friendCount = rowCards.filter(c => c.isFriend && !c.isHero).length;
-                    if (friendCount > 1) {
-                        const before = currentPower;
-                        currentPower = currentPower * friendCount;
-                        steps.push(`🤝 Друзья x${friendCount}: ${currentPower}`);
-                        change += (currentPower - before);
-                    }
-                }
-
-                if (rowHasHorn) {
-                    const before = currentPower;
-                    currentPower = currentPower * 2;
-                    steps.push(`📯 Рог ×2: ${currentPower}`);
-                    change += (currentPower - before);
-                } else if (card.hasHorn) {
-                    steps.push(`📯 Свой рог`);
-                }
-
-                return { final: currentPower, steps: steps, change: change };
-            }
-
-            calculateRow(row) {
-                const rowCards = this.cards[row];
-                if (rowCards.length === 0) return { total: 0, cards: [], state: 'normal' };
-
-                const rowHasHorn = this.horn[row];
-                const rowHasWeather = this.isRowAffectedByWeather(row);
-                const hasCardHorn = rowCards.some(c => c.hasHorn && !c.isHero);
-                const results = [];
-
-                rowCards.forEach(card => {
-                    const calc = this.calculateCardPower(card, rowCards, rowHasHorn, rowHasWeather);
-
-                    if (hasCardHorn && !rowHasHorn && !card.hasHorn && !card.isHero) {
-                        const before = calc.final;
-                        calc.final = calc.final * 2;
-                        calc.steps.push(`📯 Бард х2: ${calc.final}`);
-                        calc.change += (calc.final - before);
-                    }
-
-                    results.push({
-                        ...card,
-                        finalPower: calc.final,
-                        steps: calc.steps,
-                        change: calc.change
-                    });
-                });
-
-                const total = results.reduce((sum, card) => sum + card.finalPower, 0);
-
-                // Определяем состояние ряда для цвета
-                let state = 'normal';
-                const hasBuffed = results.some(c => c.finalPower > c.power);
-                const hasDebuffed = results.some(c => c.finalPower < c.power);
-
-                if (hasDebuffed && !hasBuffed) {
-                    state = 'debuffed';
-                } else if (hasBuffed) {
-                    state = 'buffed';
-                }
-
-                return {
-                    total: total,
-                    cards: results,
-                    state: state
-                };
-            }
-
-            calculateTotal() {
-                return this.calculateRow('melee').total +
-                       this.calculateRow('ranged').total +
-                       this.calculateRow('siege').total;
-            }
-
-            getPowerColor(card) {
-                if (card.isHero) return 'power-hero';
-                if (card.finalPower > card.power) return 'power-buffed';
-                if (card.finalPower < card.power) return 'power-debuffed';
-                return 'power-normal';
-            }
-
-            updateDisplay() {
-                const rows = ['melee', 'ranged', 'siege'];
-                const rowNames = { melee: 'Ближний', ranged: 'Дальний', siege: 'Осадный' };
-
-                const container = document.getElementById('rowsContainer');
-                container.innerHTML = '';
-
-                rows.forEach(row => {
-                    const rowData = this.calculateRow(row);
-
-                    // Классы для заголовка и суммы
-                    let headerClass = 'row-header';
-                    let totalClass = 'row-total';
-
-                    if (rowData.state === 'buffed') {
-                        headerClass += ' buffed';
-                        totalClass += ' buffed';
-                    } else if (rowData.state === 'debuffed') {
-                        headerClass += ' debuffed';
-                        totalClass += ' debuffed';
-                    } else {
-                        totalClass += ' normal';
-                    }
-
-                    if (this.expandedRows[row]) {
-                        headerClass += ' expanded';
-                    }
-
-                    let rowHtml = `
-                        <div class="row-card ${this.expandedRows[row] ? 'expanded' : ''}">
+            let rowHtml = `
+                        <div class="row-card ${this.expandedRows[row] ? "expanded" : ""}">
                             <div class="${headerClass}" onclick="toggleRow('${row}')">
                                 <span class="row-title">
                                     <span class="row-arrow">▶</span>
-                                    <span class="horn-icon ${this.horn[row] ? 'active' : ''}" onclick="event.stopPropagation(); toggleHorn('${row}')">📯</span>
+                                    <span class="horn-icon ${this.horn[row] ? "active" : ""}" onclick="event.stopPropagation(); toggleHorn('${row}')">📯</span>
                                     ${rowNames[row]}
                                 </span>
                                 <span class="${totalClass}">${rowData.total}</span>
@@ -792,83 +907,108 @@
                             <div class="cards-container">
                     `;
 
-                    rowData.cards.forEach(card => {
-                        const badges = [];
-                        if (card.isHero) badges.push('<span class="mini-badge">👑</span>');
-                        if (card.hasMorale) badges.push('<span class="mini-badge">⭐</span>');
-                        if (card.hasHorn) badges.push('<span class="mini-badge">📯</span>');
-                        if (card.isFriend) badges.push('<span class="mini-badge">🤝</span>');
+            rowData.cards.forEach((card) => {
+              const badges = [];
+              if (card.isHero)
+                badges.push('<span class="mini-badge">👑</span>');
+              if (card.hasMorale)
+                badges.push('<span class="mini-badge">⭐</span>');
+              if (card.hasHorn)
+                badges.push('<span class="mini-badge">📯</span>');
+              if (card.isFriend)
+                badges.push('<span class="mini-badge">🤝</span>');
 
-                        const powerColor = this.getPowerColor(card);
+              const powerColor = this.getPowerColor(card);
 
-                        rowHtml += `
-                            <div class="card-item ${card.isHero ? 'hero' : ''}" id="card-${card.id}" onclick="toggleCardDetails(${card.id})">
+              rowHtml += `
+                            <div class="card-item ${card.isHero ? "hero" : ""}" id="card-${card.id}" onclick="toggleCardDetails(${card.id})">
                                 <div class="card-main">
                                     <div class="card-left">
                                         <span class="card-power ${powerColor}">${card.finalPower}</span>
                                         <span class="card-name">${card.name}</span>
-                                        <div class="card-badges">${badges.join('')}</div>
+                                        <div class="card-badges">${badges.join("")}</div>
                                     </div>
                                     <div class="remove-btn" onclick="event.stopPropagation(); removeCard('${row}', ${card.id})">✖</div>
                                 </div>
                                 <div class="card-details">
                                     <div class="calc-line">
-                                        ${card.steps.map(step => `<span>${step}</span>`).join(' → ')}
+                                        ${card.steps.map((step) => `<span>${step}</span>`).join(" → ")}
                                     </div>
                                     <div class="calc-line final">= ${card.finalPower}</div>
                                 </div>
                             </div>
                         `;
-                    });
+            });
 
-                    rowHtml += `
+            rowHtml += `
                             </div>
                         </div>
                     `;
 
-                    container.innerHTML += rowHtml;
-                });
+            container.innerHTML += rowHtml;
+          });
 
-                document.getElementById('totalScore').textContent = this.calculateTotal();
-                document.getElementById('player1Wins').textContent = this.player1Wins;
-                document.getElementById('player2Wins').textContent = this.player2Wins;
-            }
-
-            addWin() {
-                this.player1Wins++;
-                this.resetBoard();
-            }
-
-            addLoss() {
-                this.player2Wins++;
-                this.resetBoard();
-            }
-
-            resetRound() {
-                this.resetBoard();
-            }
-
-            resetBoard() {
-                this.cards = { melee: [], ranged: [], siege: [] };
-                this.horn = { melee: false, ranged: false, siege: false };
-                this.expandedRows = { melee: false, ranged: false, siege: false };
-                this.updateDisplay();
-            }
+          document.getElementById("totalScore").textContent =
+            this.calculateTotal();
+          document.getElementById("player1Wins").textContent = this.player1Wins;
+          document.getElementById("player2Wins").textContent = this.player2Wins;
         }
 
-        const game = new GwentCounter();
-        game.updateDisplay();
+        addWin() {
+          this.player1Wins++;
+          this.resetBoard();
+        }
 
-        function toggleAbility(type) { game.toggleAbility(type); }
-        function addCard() { game.addCard(); }
-        function removeCard(row, id) { game.removeCard(row, id); }
-        function toggleCardDetails(id) { game.toggleCardDetails(id); }
-        function toggleHorn(row) { game.toggleHorn(row); }
-        function toggleRow(row) { game.toggleRow(row); }
-        function setWeather(type) { game.setWeather(type); }
-        function addWin() { game.addWin(); }
-        function addLoss() { game.addLoss(); }
-        function resetRound() { game.resetRound(); }
+        addLoss() {
+          this.player2Wins++;
+          this.resetBoard();
+        }
+
+        resetRound() {
+          this.resetBoard();
+        }
+
+        resetBoard() {
+          this.cards = { melee: [], ranged: [], siege: [] };
+          this.horn = { melee: false, ranged: false, siege: false };
+          this.expandedRows = { melee: false, ranged: false, siege: false };
+          this.updateDisplay();
+        }
+      }
+
+      const game = new GwentCounter();
+      game.updateDisplay();
+
+      function toggleAbility(type) {
+        game.toggleAbility(type);
+      }
+      function addCard() {
+        game.addCard();
+      }
+      function removeCard(row, id) {
+        game.removeCard(row, id);
+      }
+      function toggleCardDetails(id) {
+        game.toggleCardDetails(id);
+      }
+      function toggleHorn(row) {
+        game.toggleHorn(row);
+      }
+      function toggleRow(row) {
+        game.toggleRow(row);
+      }
+      function setWeather(type) {
+        game.setWeather(type);
+      }
+      function addWin() {
+        game.addWin();
+      }
+      function addLoss() {
+        game.addLoss();
+      }
+      function resetRound() {
+        game.resetRound();
+      }
     </script>
-</body>
+  </body>
 </html>
