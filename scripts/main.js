@@ -319,7 +319,7 @@ function renderRows() {
 
   let rangeContainer = document.getElementById("range");
   rangeContainer.innerHTML = rangeData.cardsWithPower
-    .map((item) => `<p class="btn btn_cards"> <span class="remove_btn">${item.power}</span> ${item.card.name} <span class="remove_btn" onclick="removeCard('${item.card.id}', 'melee')">✖</span></p>`)
+    .map((item) => `<p class="btn btn_cards"> <span class="remove_btn">${item.power}</span> ${item.card.name} <span class="remove_btn" onclick="removeCard('${item.card.id}', 'range')">✖</span></p>`)
     .join("");
 
   // Осадный ряд
@@ -328,7 +328,7 @@ function renderRows() {
 
   let siegeContainer = document.getElementById("siege");
   siegeContainer.innerHTML = siegeData.cardsWithPower
-    .map((item) => `<p class="btn btn_cards"> <span class="remove_btn">${item.power}</span> ${item.card.name} <span class="remove_btn" onclick="removeCard('${item.card.id}', 'melee')">✖</span></p>`)
+    .map((item) => `<p class="btn btn_cards"> <span class="remove_btn">${item.power}</span> ${item.card.name} <span class="remove_btn" onclick="removeCard('${item.card.id}', 'siege')">✖</span></p>`)
     .join("");
 }
 

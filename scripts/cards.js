@@ -2,7 +2,7 @@ cards = [
   //Нейтральные
   {
     id: 1,
-    name: "Геральт из Ривии",
+    name: "⚔️ Геральт из Ривии",
     hero: "hero",
     power: 15,
     row: "melee",
@@ -11,7 +11,7 @@ cards = [
   },
   {
     id: 2,
-    name: "Авалак'х",
+    name: "⚔️ Авалак'х",
     hero: "hero",
     power: 0,
     row: "melee",
@@ -20,7 +20,7 @@ cards = [
   },
   {
     id: 3,
-    name: "Лютик",
+    name: "⚔️ Лютик",
     hero: "",
     power: 2,
     row: "melee",
@@ -29,7 +29,7 @@ cards = [
   },
   {
     id: 4,
-    name: "Золтан Хивай",
+    name: "⚔️ Золтан Хивай",
     hero: "",
     power: 5,
     row: "melee",
@@ -38,7 +38,7 @@ cards = [
   },
   {
     id: 5,
-    name: "Эмиель Регис",
+    name: "⚔️ Эмиель Регис",
     hero: "",
     power: 5,
     row: "melee",
@@ -47,7 +47,7 @@ cards = [
   },
   {
     id: 6,
-    name: "Весемир",
+    name: "⚔️ Весемир",
     hero: "",
     power: 6,
     row: "melee",
@@ -56,7 +56,7 @@ cards = [
   },
   {
     id: 7,
-    name: "Виллентретенмерт",
+    name: "⚔️ Виллентретенмерт",
     hero: "",
     power: 7,
     row: "melee",
@@ -65,7 +65,7 @@ cards = [
   },
   {
     id: 8,
-    name: "Йеннифер",
+    name: "🏹 Йеннифер",
     hero: "hero",
     power: 7,
     row: "range",
@@ -74,7 +74,7 @@ cards = [
   },
   {
     id: 9,
-    name: "Трисс Меригольд",
+    name: "⚔️ Трисс Меригольд",
     hero: "hero",
     power: 7,
     row: "melee",
@@ -83,7 +83,7 @@ cards = [
   },
   {
     id: 10,
-    name: "Цирилла",
+    name: "⚔️ Цирилла",
     hero: "hero",
     power: 15,
     row: "melee",
@@ -92,7 +92,7 @@ cards = [
   },
   {
     id: 11,
-    name: "Ольгерд фон Эверек б",
+    name: "⚔️ Ольгерд фон Эверек",
     hero: "",
     power: 6,
     row: "melee",
@@ -101,7 +101,7 @@ cards = [
   },
   {
     id: 12,
-    name: "Ольгерд фон Эверек д",
+    name: "🏹 Ольгерд фон Эверек",
     hero: "",
     power: 6,
     row: "range",
@@ -110,7 +110,7 @@ cards = [
   },
   {
     id: 13,
-    name: "Гюнтер о'Дим",
+    name: "🏰 Гюнтер о'Дим",
     hero: "",
     power: 2,
     row: "siege",
@@ -119,7 +119,7 @@ cards = [
   },
   {
     id: 14,
-    name: "Гюнтер о'Дим: Тьма",
+    name: "🏹 Гюнтер о'Дим: Тьма",
     hero: "",
     power: 4,
     row: "range",
@@ -128,7 +128,7 @@ cards = [
   },
   {
     id: 15,
-    name: "Плотва",
+    name: "⚔️ Плотва",
     hero: "",
     power: 3,
     row: "melee",
