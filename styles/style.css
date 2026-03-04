@@ -1,0 +1,275 @@
+/* ===== СБРОС И ПЕРЕМЕННЫЕ ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-primary: #d4ccc4;
+  --bg-card: #ffffff;
+  --bg-secondary: #f8f3ed;
+  --text-primary: #2c3e4f;
+  --text-secondary: #5a6b7a;
+  --accent-gold: #c9a959;
+  --accent-green: #2e7d5e;
+  --accent-red: #c44545;
+  --font-main: -apple-system, 'Helvetica Neue', 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+/* ===== БАЗОВЫЕ СТИЛИ ===== */
+body {
+  font-family: var(--font-main);
+  font-weight: 500;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 10px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ===== ОБЩИЕ СТИЛИ БЛОКОВ ===== */
+.header,
+.rows,
+.add_card {
+  background: var(--bg-card);
+  border-radius: 32px;
+  margin-bottom: 12px;
+  width: 100%;
+  padding: 20px;
+}
+
+.rows {
+  padding: 0;
+}
+
+/* ===== ШАПКА (HEADER) ===== */
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.info p {
+  text-align: center;
+}
+
+.my_info,
+.oponent_info {
+  width: 50%;
+}
+
+.oponent_info .game_points_win {
+  color: #c44545;
+}
+
+.sum_power {
+  font-size: 4rem;
+  font-weight: 700;
+  justify-self: center;
+}
+
+.round {
+  font-size: 1rem;
+  display: flex;
+  background: #f0e9e2;
+  padding: 6px 14px;
+  border-radius: 60px;
+  border: 1px solid #d9d0c7;
+  justify-content: space-between;
+}
+
+.game_points_win {
+  color: var(--accent-green);
+}
+
+.game_points_lose {
+  color: var(--accent-red);
+}
+
+/* ===== ПОГОДА ===== */
+.weather {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 60px;
+  background: #f0e9e2;
+  border: 2px solid transparent;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  appearance: none;
+  text-align: center;
+}
+
+.weather:hover {
+  border-color: var(--accent-gold);
+  background-color: #e8dfd5;
+}
+
+/* ===== КНОПКИ ===== */
+.btn {
+  padding: 24px;
+  background: linear-gradient(145deg, #f0e9e2, #e5dbd2);
+  width: 100%;
+  border-radius: 60px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.btn_filter,
+.horn_btn {
+  font-size: 0.8rem;
+  width: min-content;
+  text-align: center;
+  padding: 9px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.fraction_btns .active,
+.row_btns .active {
+  background-color: #c44545;
+  color: #c44545;
+}
+
+/* ===== МОДАЛЬНОЕ ОКНО ===== */
+.modal {
+  position: fixed;
+  display: flex;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.modal.close {
+  display: none;
+}
+
+.modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  pointer-events: auto;
+}
+
+.modal_window {
+  position: fixed;
+  max-width: 360px;
+  width: 90%;
+  background: linear-gradient(145deg, #fffcf7, #f5efe8);
+  border-radius: 24px;
+  padding: 20px;
+  pointer-events: auto;
+  z-index: 1000;
+  max-height: 95vh;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.modal_window button {
+  margin-top: 10px;
+}
+
+/* ===== МОДАЛКА ФРАКЦИЙ ===== */
+
+.fraction {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fraction .btn {
+  width: 100%;
+  margin: 5px 0;
+}
+
+/* ===== МОДАЛКА КАРТ ===== */
+.card_container {
+  height: 40vh;
+  overflow: auto;
+}
+
+.btn_cards {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px;
+  margin: 15px 0;
+  text-align: left;
+}
+
+/* ===== РЯДЫ (ROWS) ===== */
+.row_area {
+  position: relative;
+  margin: 20px;
+}
+
+.row_btn {
+  width: calc(100% - 50px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 50px;
+}
+
+.horn_btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 40px;
+}
+
+.horn_btn.active {
+  background: #e7bb96;
+}
+
+.row_points,
+.row_title {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.row_title {
+  display: flex;
+  flex-direction: row;
+}
+
+/* ===== КАРТЫ В РЯДАХ ===== */
+.cards {
+  display: none;
+  padding: 0 20px;
+}
+
+.cards.open {
+  display: block;
+}
+
+.remove_btn {
+  margin-right: 11px;
+  margin-left: 11px;
+}
